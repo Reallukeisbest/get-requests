@@ -1,27 +1,27 @@
-function getrequest(theUrl, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
+function getrequest(url, response) {
+    xmlreq = new XMLHttpRequest();
+    xmlreq.onreadystatechange = function() { 
+        if (xmlreq.readyState == 4 && xmlreq.status == 200) {
+            response(xmlreq.responseText);
+        }
     }
-    xmlHttp.open("GET", theUrl, true);
-    xmlHttp.send(null);
+    xmlreq.open("GET", url, true);
+    xmlreq.send(null);
 }
 
 function postrequest(url, params, response) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
+    var xmlreq = new XMLHttpRequest();
+    xmlreq.open("POST", url, true);
 
-    xhr.onreadystatechange = function () {
-        if (this.readyState != 4) return;
+    xmlreq.onreadystatechange = function () {
+        if (this.readyState != 4) { return };
 
         if (this.status == 200) {
-            var data = this.responseText;
-            response(data);
+            response(this.responseText);
         }
     };
 
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlreq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.send(params);
+    xmlreq.send(params);
 }
