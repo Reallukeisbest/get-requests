@@ -11,17 +11,12 @@ function getrequest(url, response) {
 
 function postrequest(url, params, response) {
     var xmlreq = new XMLHttpRequest();
-    xmlreq.open("POST", url, true);
-
     xmlreq.onreadystatechange = function () {
-        if (this.readyState != 4) { return };
-
-        if (this.status == 200) {
+        if (xmlreq.readyState == 4 && xmlreq.status == 200) {
             response(this.responseText);
         }
     };
-
+    xmlreq.open("POST", url, true);
     xmlreq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
     xmlreq.send(params);
 }
